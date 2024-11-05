@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Embark on an epic journey in the world of The Legend of Zelda. Explore products and news related to the legendary game series.">
+  <title>The Legend of Zelda</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <style>
+    /* Basic reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* CSS Variables */
+    :root {
+      --primary-color: #f3f3f3;
+      --secondary-color: #f7c231;
+      --dark-bg: #1a1a1a;
+      --dark-gray: #333;
+      --light-gray: #2d2d2d;
+      --highlight-color: #ff7f50;
+      --font-family: 'Poppins', sans-serif;
+      --shadow: rgba(0, 0, 0, 0.2) 0px 5px 15px;
+    }
+
+    body {
+      font-family: var(--font-family);
+      color: var(--primary-color);
+      background-color: var(--dark-bg);
+      line-height: 1.6;
+    }
+
+    /* Header */
+    header {
+      background: url('legand.jpg') no-repeat center center/cover;
+      height: 60vh;
+      color: var(--primary-color);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 20px;
+      background: linear-gradient(45deg, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.5)), url('lgnd.jpg');
+      background-size: cover;
+      background-position: center;
+    }
+
+    header h1 {
+      font-size: 4rem;
+      margin-bottom: 0.5rem;
+      text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
+    }
+
+    header p {
+      font-size: 1.5rem;
+      font-weight: 300;
+      margin-top: 10px;
+    }
+
+    /* Sticky Navigation Bar */
+    nav {
+      position: sticky;
+      top: 0;
+      background-color: var(--dark-gray);
+      padding: 10px 0;
+      z-index: 100;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    nav a {
+      color: var(--primary-color);
+      margin: 0 15px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.3s, transform 0.2s;
+    }
+
+    nav a:hover {
+      color: var(--highlight-color);
+      transform: scale(1.1);
+    }
+
+    /* Section Styling */
+    .featured-products, .latest-news {
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    .featured-products h2, .latest-news h2 {
+      margin-bottom: 20px;
+      font-size: 2.5rem;
+      color: var(--secondary-color);
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    /* Product & News Item Cards */
+    .product, .news-item {
+      display: inline-block;
+      width: calc(33% - 30px); /* 3 items per row with space */
+      margin: 15px;
+      padding: 20px;
+      background: var(--light-gray);
+      border-radius: 15px;
+      box-shadow: var(--shadow);
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .product:hover, .news-item:hover {
+      transform: translateY(-10px);
+      box-shadow: rgba(0, 0, 0, 0.3) 0px 10px 20px;
+    }
+
+    .product img, .news-item img {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+      transition: transform 0.3s ease;
+    }
+
+    .product img:hover, .news-item img:hover {
+      transform: scale(1.05);
+    }
+
+    /* Buttons for CTA */
+    .cta-button {
+      background-color: var(--highlight-color);
+      color: var(--primary-color);
+      padding: 12px 20px;
+      font-size: 1.2rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 5px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      margin-top: 20px;
+    }
+
+    .cta-button:hover {
+      background-color: #ff5722;
+      transform: translateY(-2px);
+    }
+
+    /* Footer Styling */
+    footer {
+      background: var(--dark-gray);
+      color: var(--primary-color);
+      text-align: center;
+      padding: 30px;
+      margin-top: 20px;
+      font-size: 0.9rem;
+    }
+
+    footer a {
+      color: var(--primary-color);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    footer a:hover {
+      color: var(--highlight-color);
+    }
+
+    /* Media Queries for Responsiveness */
+    @media (max-width: 1024px) {
+      .product, .news-item {
+        width: calc(50% - 30px); /* 2 items per row on medium screens */
+      }
+    }
+
+    @media (max-width: 768px) {
+      .product, .news-item {
+        width: calc(100% - 30px); /* Stack items vertically on smaller screens */
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Header Section -->
+<header>
+  <div>
+    <h1>The Legend of Zelda</h1>
+    <p>Embark on an epic journey in a world of magic and mystery.</p>
+  </div>
+</header>
+
+<!-- Navigation Bar -->
+<nav>
+  <a href="#">Home</a>
+  <a href="#">About</a>
+  <a href="#">News</a>
+  <a href="#">Products</a>
+</nav>
+
+<!-- Featured Products Section -->
+<section class="featured-products" aria-labelledby="featured-products-title">
+  <h2 id="featured-products-title">Featured Products</h2>
+  <div class="product">
+    <img src="zel1.jpg" alt="Fantasy Adventure game box with art of a hero character">
+    <p>Fantasy Adventure</p>
+    <button class="cta-button">Buy Now</button>
+  </div>
+  <div class="product">
+    <img src="zel2.jpg" alt="Epic Quests game box with fantasy artwork">
+    <p>Epic Quests</p>
+    <button class="cta-button">Buy Now</button>
+  </div>
+  <div class="product">
+    <img src="zel3.jpg" alt="New Zelda Limited Edition item">
+    <p>Limited Edition</p>
+    <button class="cta-button">Buy Now</button>
+  </div>
+</section>
+
+<!-- Latest News Section -->
+<section class="latest-news" aria-labelledby="latest-news-title">
+  <h2 id="latest-news-title">Latest News</h2>
+  <div class="news-item">
+    <img src="zel4.jpg" alt="Screenshot of new Fantasy Adventure game release">
+    <p>New release of Fantasy Adventure!</p>
+  </div>
+  <div class="news-item">
+    <img src="zel5.jpg" alt="Hidden secrets revealed in new Zelda game update">
+    <p>Discover hidden secrets!</p>
+  </div>
+  <div class="news-item">
+    <img src="zel6.jpg" alt="Teaser for upcoming Zelda game">
+    <p>Stay tuned for the next big adventure!</p>
+  </div>
+</section>
+
+<!-- Footer Section -->
+<footer>
+  <p>&copy; 2024 The Legend of Zelda. All rights reserved. Created by Aishwarya Jagtap.</p>
+  <p><a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+</footer>
+
+</body>
+</html>
