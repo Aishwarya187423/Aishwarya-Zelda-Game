@@ -15,7 +15,11 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
-
+  
+    - name: Install Dependencies
+      run: npm install
+      working-directory: ./Aishwarya-Zelda-Game
+  
     - name: Set up Node.js
       uses: actions/setup-node@v3
       with:
@@ -26,3 +30,5 @@ jobs:
 
     - name: Run Jest tests
       run: npm test
+
+
