@@ -23,15 +23,16 @@ jobs:
       with:
         node-version: '16'
         
-    - name: List directory contents
+    # Step 3: Debug directory structure
+    - name: Debug Directory Structure
       run: ls -R
 
-    # Step 3: Install dependencies
+    # Step 4: Install dependencies
     - name: Install Dependencies
       run: npm install
-      
+      working-directory: ./Aishwarya-Zelda-Game
 
-    # Step 4: Run tests
+    # Step 5: Run tests
     - name: Run Jest Tests
       run: npm test
-     
+      working-directory: ./Aishwarya-Zelda-Game
