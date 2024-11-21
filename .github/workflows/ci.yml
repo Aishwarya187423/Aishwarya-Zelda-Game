@@ -19,7 +19,11 @@ jobs:
     - name: Install Dependencies
       run: npm install
       working-directory: ./Aishwarya-Zelda-Game
-  
+
+    - name: Run Tests
+      run: npm test
+      working-directory: ./Aishwarya-Zelda-Game
+      
     - name: Set up Node.js
       uses: actions/setup-node@v3
       with:
