@@ -1,9 +1,22 @@
 {
+  "name": "aishwarya-zelda-game",
+  "version": "1.0.0",
+  "description": "A project for The Legend of Zelda game-related website",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [
+    "zelda",
+    "game",
+    "jest",
+    "html",
+    "css"
+  ],
+  "author": "Aishwarya",
+  "license": "ISC",
   "devDependencies": {
     "jest": "^29.7.0",
     "jsdom": "^25.0.1"
-  },
-  "scripts": {
-    "test": "jest"
   }
 }
