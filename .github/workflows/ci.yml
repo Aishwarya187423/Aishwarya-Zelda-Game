@@ -13,16 +13,26 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    # Step 1: Checkout the code
     - name: Checkout code
       uses: actions/checkout@v3
 
+    # Step 2: Set up Node.js environment
     - name: Set up Node.js
       uses: actions/setup-node@v3
       with:
         node-version: '16'
+        
+    # Step 3: Debug directory structure
+    - name: Debug Directory Structure
+      run: ls -R
 
-    - name: Install dependencies
+    # Step 4: Install dependencies
+    - name: Install Dependencies
       run: npm install
+      working-directory: ./Aishwarya-Zelda-Game
 
-    - name: Run Jest tests
+    # Step 5: Run tests
+    - name: Run Jest Tests
       run: npm test
+      working-directory: ./Aishwarya-Zelda-Game
