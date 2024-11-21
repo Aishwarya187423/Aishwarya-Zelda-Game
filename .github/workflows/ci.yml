@@ -23,14 +23,14 @@ jobs:
       with:
         node-version: '16'
 
-    # Step 3: List directory contents (for debugging purposes)
-    - name: List directory contents
-      run: ls -R
+    # Step 3: Clear npm cache to avoid conflicts
+    - name: Clear npm cache
+      run: npm cache clean --force
 
     # Step 4: Install dependencies
     - name: Install Dependencies
-      run: npm install
+      run: npm ci
 
-    # Step 5: Run tests
+    # Step 5: Run Jest Tests
     - name: Run Jest Tests
       run: npm test
