@@ -22,17 +22,15 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: '16'
-        
-    # Step 3: Debug directory structure
-    - name: Debug Directory Structure
+
+    # Step 3: List directory contents (for debugging purposes)
+    - name: List directory contents
       run: ls -R
 
     # Step 4: Install dependencies
     - name: Install Dependencies
       run: npm install
-      working-directory: ./Aishwarya-Zelda-Game
 
     # Step 5: Run tests
     - name: Run Jest Tests
       run: npm test
-      working-directory: ./Aishwarya-Zelda-Game
