@@ -4,7 +4,7 @@
   "description": "A project for The Legend of Zelda game-related website",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "npx jest"
   },
   "keywords": [
     "zelda",
