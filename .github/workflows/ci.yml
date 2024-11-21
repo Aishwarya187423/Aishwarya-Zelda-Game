@@ -22,15 +22,18 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: '16'
-
-    # Step 3: List directory contents (for debugging purposes)
+        
     - name: List directory contents
       run: ls -R
 
-    # Step 4: Install dependencies
+    # Step 3: Install dependencies
     - name: Install Dependencies
       run: npm install
 
-    # Step 5: Run tests
+    # Step 4: Set executable permissions for Jest
+    - name: Set executable permissions for jest
+      run: chmod +x ./node_modules/.bin/jest
+
+    # Step 5: Run Jest Tests
     - name: Run Jest Tests
       run: npm test
