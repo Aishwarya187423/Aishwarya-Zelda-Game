@@ -14,25 +14,27 @@ jobs:
           echo "Debug: Comment body is: ${{ github.event.comment.body }}"
           echo "Debug: Comment author is: ${{ github.event.comment.user.login }}"
           echo "Debug: Issue number is: ${{ github.event.issue.number }}"
-          echo "Comment Body: ${{ github.event.comment.body }}"
-          echo "Issue Number: ${{ github.event.issue.number }}"
-          echo "Issue Node ID: ${{ github.event.issue.node_id }}"
-        
-      - name: Set the NODE_ID environment variable
-        run: echo "NODE_ID=${{ github.event.issue.node_id }}" >> $GITHUB_ENV
+
+        # Step 4: Fetch Issue Node ID
+      - name: Get Issue Node ID
+        id: fetch_node_id
+        run: echo "NODE_ID=$(gh issue view ${{ github.event.issue.number }} --json node_id --jq '.node_id')" >> $GITHUB_ENV
+        env:
+            GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Check if the comment contains 'done'
         if: contains(github.event.comment.body, 'done')
         run: echo "Comment contains 'done', proceeding to move the issue..."
 
       - name: Move Issue to 'Done'
+
         if: ${{ github.event.comment.body && contains(github.event.comment.body, 'done') }}
         uses: leonsteinhaeuser/project-beta-automations@v2.1.0
         with:
           gh_token: ${{ secrets.GITHUB_TOKEN }}
           project_id: "PVT_kwHOCtxenM4As1ms" # Replace this with your project ID
           user: "@me"
-          resource_node_id: I_kwDONK5QlM6gGc4W
+          resource_node_id: ${{ env.NODE_ID }}
           move_related_issues: true
           status_value: "Done"
           operation_mode: status
