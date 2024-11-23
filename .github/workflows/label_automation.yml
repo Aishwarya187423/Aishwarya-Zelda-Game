@@ -18,12 +18,12 @@ jobs:
 
             // Define the keywords and their corresponding labels
             const keywordsToLabels = {
-              bug: 'bug',
+               bug: 'bug',
               enhancement: 'enhancement',
               documentation: 'documentation',
               duplicate: 'duplicate',
-              good_first_issue: 'good first issue',
-              help_wanted: 'help wanted',
+              'good first issue': 'good first issue',
+              'help wanted': 'help wanted',
               invalid: 'invalid',
               wontfix: 'wontfix',
             };
