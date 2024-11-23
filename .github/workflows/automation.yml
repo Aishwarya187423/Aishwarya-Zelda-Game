@@ -1,59 +1,46 @@
-name: Move Issue to Done
-
+name: Move Issues on Kanban Based on Comments
 on:
   issue_comment:
-    types: [created]
-
+    types:
+      - created
 jobs:
-  move-to-done:
+  move-issues:
     runs-on: ubuntu-latest
-
+    env:
+      ACTIONS_STEP_DEBUG: true  # Enable detailed debug logs
     steps:
-      # Step to set the GH_TOKEN and fetch the issue ID from GitHub GraphQL API
-      - name: Set GH_TOKEN environment variable
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          # Query GitHub GraphQL API for the issue's ID
-          ISSUE_ID=$(gh api graphql -f query='
-          {
-            repository(owner: "Aishwarya187423", name: "Aishwarya-Zelda-Game") {
-              issue(number: ${{ github.event.issue.number }}) {
-                id
-              }
-            }
-          }' --jq '.data.repository.issue.id')
-          
-          # Set the issue ID as an environment variable
-          echo "ISSUE_ID=${ISSUE_ID}" >> $GITHUB_ENV
-
-      # Log the issue comment details
-      - name: Log the issue comment details
-        run: |
-          echo "Debug: Comment body: ${{ github.event.comment.body }}"
-          echo "Debug: Comment author: ${{ github.event.comment.user.login }}"
-          echo "Debug: Issue number: ${{ github.event.issue.number }}"
-          echo "Debug: Issue ID: ${{ env.ISSUE_ID }}"
-
-      # Step to check if the comment contains 'done'
-      - name: Check if the comment contains 'done'
-        if: contains(github.event.comment.body, 'done')
-        run: echo "Comment contains 'done', proceeding to move the issue..."
-
-      # Move the issue to 'Done' status using the automation tool
-      - name: Move Issue to 'Done'
-        if: contains(github.event.comment.body, 'done')
-        uses: leonsteinhaeuser/project-beta-automations@v2.1.0
-        with:
-          gh_token: ${{ secrets.GITHUB_TOKEN }}
-          user: "Aishwarya187423"
-          resource_node_id: ${{ env.ISSUE_ID }}  # Use the dynamically set issue ID
-          move_related_issues: true
-          PROJECT_ID : 6
-          status_value: "Done"
-          operation_mode: status
-
-      # Log success after moving the issue
-      - name: Log success
-        if: contains(github.event.comment.body, 'done')
-        run: echo "Successfully moved the issue to 'Done' status."
+    # Step 1: Check out the code
+    - name: Checkout code
+      uses: actions/checkout@v3
+    # Step 2: List all projects for debugging
+    - name: List projects
+      run: gh project list
+      env:
+        GH_TOKEN: ${{ secrets.SECRET_FOR_AUTOMATION }}
+    - name: Debug Project Information
+      run: gh project view 13 --format json --owner "@me" | jq -r '.[]'
+      env:
+        GH_TOKEN: ${{ secrets.SECRET_FOR_AUTOMATION }}
+ 
+    # Step 3: Move issues based on comment content (Done)
+    - name: Move Issues on Kanban
+      uses: leonsteinhaeuser/project-beta-automations@v2.1.0
+      if: ${{ github.event_name == 'issue_comment' && github.event.action == 'created' && contains(github.event.comment.body, 'Done') }}
+      with:
+         gh_token: ${{ secrets.SECRET_FOR_AUTOMATION }}
+         project_id: 6
+         user: 'Aishwarya187423'
+         resource_node_id: ${{ github.event.issue.node_id }}  # Use the node_id from the issue
+         move_related_issues: true
+         status_value: 'Done' # Target status
+     # Step 4: Move issues based on comment content (In Progress)
+    - name: Move Issues on Kanban
+      uses: leonsteinhaeuser/project-beta-automations@v2.1.0
+      if: ${{ github.event_name == 'issue_comment' && github.event.action == 'created' && contains(github.event.comment.body, 'In progress') }}
+      with:
+         gh_token: ${{ secrets.SECRET_FOR_AUTOMATION }}
+         project_id: 6
+         user: 'Aishwarya187423'
+         resource_node_id: ${{ github.event.issue.node_id }}  # Use the node_id from the issue
+         move_related_issues: true
+         status_value: 'In progress' # Target status
