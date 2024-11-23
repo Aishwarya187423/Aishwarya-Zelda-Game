@@ -49,6 +49,7 @@ jobs:
           user: "Aishwarya187423"
           resource_node_id: ${{ env.ISSUE_ID }}  # Use the dynamically set issue ID
           move_related_issues: true
+          PROJECT_ID : 6
           status_value: "Done"
           operation_mode: status
 
