@@ -21,6 +21,19 @@ jobs:
       run: gh project view 13 --format json --owner "@me" | jq -r '.[]'
       env:
         GH_TOKEN: ${{ secrets.SECRET_FOR_AUTOMATION }}
+        
+  # Step : Move issues based on comment content (To Do)
+    - name: Move Issues on Kanban
+      uses: leonsteinhaeuser/project-beta-automations@v2.1.0
+      if: ${{ github.event_name == 'issue_comment' && github.event.action == 'created' && contains(github.event.comment.body, 'To Do') }}
+      with:
+         gh_token: ${{ secrets.SECRET_FOR_AUTOMATION }}
+         project_id: 6
+         user: 'Aishwarya187423'
+         resource_node_id: ${{ github.event.issue.node_id }}  # Use the node_id from the issue
+         move_related_issues: true
+         status_value: 'To Do' # Target status
+
  
     # Step 3: Move issues based on comment content (Done)
     - name: Move Issues on Kanban
