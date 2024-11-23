@@ -14,7 +14,10 @@ jobs:
           echo "Debug: Comment body is: ${{ github.event.comment.body }}"
           echo "Debug: Comment author is: ${{ github.event.comment.user.login }}"
           echo "Debug: Issue number is: ${{ github.event.issue.number }}"
-
+          echo "Comment Body: ${{ github.event.comment.body }}"
+          echo "Issue Number: ${{ github.event.issue.number }}"
+          echo "Issue Node ID: ${{ github.event.issue.node_id }}"
+        
       - name: Set the NODE_ID environment variable
         run: echo "NODE_ID=${{ github.event.issue.node_id }}" >> $GITHUB_ENV
 
@@ -29,7 +32,7 @@ jobs:
           gh_token: ${{ secrets.GITHUB_TOKEN }}
           project_id: "PVT_kwHOCtxenM4As1ms" # Replace this with your project ID
           user: "@me"
-          resource_node_id: ${{ github.event.issue.node_id }}
+          resource_node_id: ${{ env.NODE_ID }}
           move_related_issues: true
           status_value: "Done"
           operation_mode: status
