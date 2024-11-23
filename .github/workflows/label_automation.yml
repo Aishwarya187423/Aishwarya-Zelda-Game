@@ -1,0 +1,76 @@
+name: Auto-Label Issues
+
+on:
+
+  issues:
+
+    types: [opened] # Trigger the workflow when a new issue is created
+
+jobs:
+
+  auto-label:
+
+    runs-on: ubuntu-latest # Run on the latest Ubuntu environment
+
+    steps:
+
+      - name: Auto-label based on issue description
+
+        uses: actions/github-script@v6 # Use the GitHub Script action
+
+        with:
+
+          script: |
+
+            // Get the issue description and convert it to lowercase
+
+            const issueBody = context.payload.issue.body?.toLowerCase() || "";
+
+            // Array to hold labels to add
+
+            const labelsToAdd = [];
+
+            // Check for keywords and add corresponding labels
+
+            if (issueBody.includes('bug')) {
+
+              labelsToAdd.push('bug');
+
+            }
+
+            if (issueBody.includes('enhancement')) {
+
+              labelsToAdd.push('enhancement');
+
+            }
+
+            if (issueBody.includes('documentation')) {
+
+              labelsToAdd.push('documentation');
+
+            }
+
+            // Apply the labels if any match
+
+            if (labelsToAdd.length > 0) {
+
+              await github.rest.issues.addLabels({
+
+                owner: context.repo.owner, // Repo owner
+
+                repo: context.repo.repo,   // Repo name
+
+                issue_number: context.payload.issue.number, // Issue number
+
+                labels: labelsToAdd, // Labels to apply
+
+              });
+
+              console.log(`Labels added: ${labelsToAdd.join(', ')}`);
+
+            } else {
+
+              console.log("No matching labels found in the issue description.");
+
+            }
+ 
