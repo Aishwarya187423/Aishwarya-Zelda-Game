@@ -11,17 +11,20 @@ jobs:
     steps:
       - name: Set GH_TOKEN environment variable
         env:
-          GH_TOKEN: ${{ secrets.SECRET_FOR_AUTOMATION }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          NODE_ID=$(gh api graphql -f query='
+          # Query GitHub GraphQL API for the issue's ID
+          ISSUE_ID=$(gh api graphql -f query='
           {
-            repository(owner: "YOUR_USERNAME", name: "YOUR_REPOSITORY_NAME") {
+            repository(owner: "Aishwarya187423", name: "Aishwarya-Zelda-Game") {
               issue(number: ${{ github.event.issue.number }}) {
-                node_id
+                id
               }
             }
-          }' --jq '.data.repository.issue.node_id')
-          echo "NODE_ID=${NODE_ID}" >> $GITHUB_ENV
+          }' --jq '.data.repository.issue.id')
+          
+          # Set the issue ID as an environment variable
+          echo "ISSUE_ID=${ISSUE_ID}" >> $GITHUB_ENV
 
       # Log the issue comment details
       - name: Log the issue comment details
@@ -29,7 +32,7 @@ jobs:
           echo "Debug: Comment body: ${{ github.event.comment.body }}"
           echo "Debug: Comment author: ${{ github.event.comment.user.login }}"
           echo "Debug: Issue number: ${{ github.event.issue.number }}"
-          echo "Debug: Issue node ID: ${{ github.event.issue.node_id }}"
+          echo "Debug: Issue ID: ${{ env.ISSUE_ID }}"
 
       # Check if the comment contains 'done'
       - name: Check if the comment contains 'done'
@@ -44,7 +47,7 @@ jobs:
           gh_token: ${{ secrets.GITHUB_TOKEN }}
           project_id: "PVT_kwHOCtxenM4As1ms"  # Replace this with your project ID
           user: "@me"
-          resource_node_id: ${{ env.NODE_ID }}  # Use the dynamically set value
+          resource_node_id: ${{ env.ISSUE_ID }}  # Use the dynamically set issue ID
           move_related_issues: true
           status_value: "Done"
           operation_mode: status
