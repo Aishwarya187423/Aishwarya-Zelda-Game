@@ -45,8 +45,8 @@ jobs:
         uses: leonsteinhaeuser/project-beta-automations@v2.1.0
         with:
           gh_token: ${{ secrets.GITHUB_TOKEN }}
-          project_id: "PVT_kwHOCtxenM4As1ms"  # Replace this with your project ID
-          user: "@me"
+          project_id: "2"  # Replace this with your project ID
+          user: "Aishwarya187423"
           resource_node_id: ${{ env.ISSUE_ID }}  # Use the dynamically set issue ID
           move_related_issues: true
           status_value: "Done"
