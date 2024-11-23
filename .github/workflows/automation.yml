@@ -11,6 +11,7 @@ jobs:
     steps:
       - name: Log the issue comment details
         run: |
+          run: echo "Debug: Issue Node ID is: ${{ github.event.issue.node_id }}"
           echo "Debug: Comment body is: ${{ github.event.comment.body }}"
           echo "Debug: Comment author is: ${{ github.event.comment.user.login }}"
           echo "Debug: Issue number is: ${{ github.event.issue.number }}"
