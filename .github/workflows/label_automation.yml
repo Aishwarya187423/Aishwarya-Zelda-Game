@@ -23,7 +23,7 @@ jobs:
               documentation: 'documentation',
               duplicate: 'duplicate',
               good_first_issue: 'good first issue',
-              help wanted: 'help wanted',
+              help_wanted: 'help wanted',
               invalid: 'invalid',
               wontfix: 'wontfix',
             };
