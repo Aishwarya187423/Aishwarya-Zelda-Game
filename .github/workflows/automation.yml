@@ -9,44 +9,47 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Set GH_TOKEN environment variable
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          NODE_ID=$(gh api graphql -f query='
+          {
+            repository(owner: "YOUR_USERNAME", name: "YOUR_REPOSITORY_NAME") {
+              issue(number: ${{ github.event.issue.number }}) {
+                node_id
+              }
+            }
+          }' --jq '.data.repository.issue.node_id')
+          echo "NODE_ID=${NODE_ID}" >> $GITHUB_ENV
+
+      # Log the issue comment details
       - name: Log the issue comment details
         run: |
-          echo "Debug: Comment body is: ${{ github.event.comment.body }}"
-          echo "Debug: Comment author is: ${{ github.event.comment.user.login }}"
-          echo "Debug: Issue number is: ${{ github.event.issue.number }}"
+          echo "Debug: Comment body: ${{ github.event.comment.body }}"
+          echo "Debug: Comment author: ${{ github.event.comment.user.login }}"
+          echo "Debug: Issue number: ${{ github.event.issue.number }}"
+          echo "Debug: Issue node ID: ${{ github.event.issue.node_id }}"
 
-        # Step 4: Fetch Issue Node ID
-      - name: Get Issue Node ID
-        id: fetch_node_id
-        run: echo "NODE_ID=$(gh issue view ${{ github.event.issue.number }} --json node_id --jq '.node_id')" >> $GITHUB_ENV
-        env:
-            GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # Check if the comment contains 'done'
+      - name: Check if the comment contains 'done'
+        if: contains(github.event.comment.body, 'done')
+        run: echo "Comment contains 'done', proceeding to move the issue..."
 
-      - name: Set the NODE_ID environment variable using GraphQL
-        run: |
-            NODE_ID=$(gh api graphql -f query='
-            {
-            repository(owner: "YOUR_USERNAME", name: "YOUR_REPOSITORY_NAME") {
-                issue(number: ${{ github.event.issue.number }}) {
-                node_id
-                }
-            }
-            }' --jq '.data.repository.issue.node_id')
-            echo "NODE_ID=${NODE_ID}" >> $GITHUB_ENV
-
+      # Move the issue to 'Done'
       - name: Move Issue to 'Done'
-
-        if: ${{ github.event.comment.body && contains(github.event.comment.body, 'done') }}
+        if: contains(github.event.comment.body, 'done')
         uses: leonsteinhaeuser/project-beta-automations@v2.1.0
         with:
           gh_token: ${{ secrets.GITHUB_TOKEN }}
-          project_id: "PVT_kwHOCtxenM4As1ms" # Replace this with your project ID
+          project_id: "PVT_kwHOCtxenM4As1ms"  # Replace this with your project ID
           user: "@me"
-          resource_node_id: ${{ env.NODE_ID }}
+          resource_node_id: ${{ env.NODE_ID }}  # Use the dynamically set value
           move_related_issues: true
           status_value: "Done"
           operation_mode: status
 
+      # Log success after moving the issue
       - name: Log success
-        if: ${{ github.event.comment.body && contains(github.event.comment.body, 'done') }}
+        if: contains(github.event.comment.body, 'done')
         run: echo "Successfully moved the issue to 'Done' status."
