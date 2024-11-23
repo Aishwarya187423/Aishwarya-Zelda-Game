@@ -22,7 +22,7 @@ jobs:
               enhancement: 'enhancement',
               documentation: 'documentation',
               duplicate: 'duplicate',
-              good first issue: 'good first issue',
+              good_first_issue: 'good first issue',
               help wanted: 'help wanted',
               invalid: 'invalid',
               wontfix: 'wontfix',
