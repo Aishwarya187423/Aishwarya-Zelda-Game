@@ -9,6 +9,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Step to set the GH_TOKEN and fetch the issue ID from GitHub GraphQL API
       - name: Set GH_TOKEN environment variable
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -34,12 +35,12 @@ jobs:
           echo "Debug: Issue number: ${{ github.event.issue.number }}"
           echo "Debug: Issue ID: ${{ env.ISSUE_ID }}"
 
-      # Check if the comment contains 'done'
+      # Step to check if the comment contains 'done'
       - name: Check if the comment contains 'done'
         if: contains(github.event.comment.body, 'done')
         run: echo "Comment contains 'done', proceeding to move the issue..."
 
-      # Move the issue to 'Done'
+      # Move the issue to 'Done' status using the automation tool
       - name: Move Issue to 'Done'
         if: contains(github.event.comment.body, 'done')
         uses: leonsteinhaeuser/project-beta-automations@v2.1.0
