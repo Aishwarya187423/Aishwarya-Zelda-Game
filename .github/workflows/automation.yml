@@ -26,6 +26,7 @@ jobs:
     - name: Move Issues on Kanban
       uses: leonsteinhaeuser/project-beta-automations@v2.1.0
       if: ${{ github.event_name == 'issue_comment' && github.event.action == 'created' && contains(github.event.comment.body, 'To Do') }}
+          console.log('Issue moved to To Do column');
       with:
          gh_token: ${{ secrets.SECRET_FOR_AUTOMATION }}
          project_id: 6
@@ -39,6 +40,7 @@ jobs:
     - name: Move Issues on Kanban
       uses: leonsteinhaeuser/project-beta-automations@v2.1.0
       if: ${{ github.event_name == 'issue_comment' && github.event.action == 'created' && contains(github.event.comment.body, 'Done') }}
+          console.log('Issue moved to Done column');
       with:
          gh_token: ${{ secrets.SECRET_FOR_AUTOMATION }}
          project_id: 6
@@ -50,6 +52,7 @@ jobs:
     - name: Move Issues on Kanban
       uses: leonsteinhaeuser/project-beta-automations@v2.1.0
       if: ${{ github.event_name == 'issue_comment' && github.event.action == 'created' && contains(github.event.comment.body, 'In progress') }}
+          console.log('Issue moved to In Progress column');
       with:
          gh_token: ${{ secrets.SECRET_FOR_AUTOMATION }}
          project_id: 6
