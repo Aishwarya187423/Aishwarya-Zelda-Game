@@ -28,7 +28,7 @@ jobs:
               'help wanted': 'help wanted',
               invalid: 'invalid',
               wontfix: 'wontfix',
-              design: 'design',
+              design: 'design', 
 
             };
 
